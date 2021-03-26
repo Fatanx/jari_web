@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/person.css' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.1/echarts.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+   <div class="nav"></div>
+   <div class ="container" id="container">
+        <namecard ref="showimg" v-bind:person="this.person"></namecard>
+        <scorecard></scorecard>
+        <div class='project_box box'>
+            <projectcard></projectcard>
+        </div>
+       <historycard></historycard>
+       <div class="end" id =<%=name%>></div>
+   </div>
+</body>
+<script src='../javascripts/person.js'></script>
+<script src='../javascripts/vperson.js'></script>
+</html>

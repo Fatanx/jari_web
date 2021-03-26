@@ -1,0 +1,90 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.box{
+    display:inline-block;
+    float: left;
+}
+.end{
+    clear: both;
+}
+body{
+    background-color: #ccf;
+    text-align:center;
+    width: 100%;
+    height: 100%;
+}
+
+.nav{
+    height:50px;
+}
+
+.container{
+    width: 800px;
+    margin: 0 auto;
+    height:auto;
+    background-color: #eee;
+    padding:80px;
+}
+
+.box{
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
+.name_box{
+    width: 120px;
+    height: 200px;
+    display: inline-block;
+    float: left;
+}
+
+.img_box{
+    width:100%;
+    height:155px;
+    text-align: center;
+    line-height: 155px;
+}
+
+.img_box img{
+    width: 100%;
+    vertical-align: middle;
+    margin: 0 auto;
+}
+
+.name_box p{
+    margin-top: 20px;
+}
+
+.score_box{
+    width:600px;
+    height: 200px;
+    margin-left: 76px;
+}
+
+.project_box{
+    width:800px;
+    height:160px;
+    margin-top: 40px;
+}
+
+.project_box p{
+    display: inline-block;
+}
+
+.project_box p .best{
+    left:  10px;
+}
+
+.project_box p .best_date{
+    right: 10px;
+}
+
+.history_box{
+    width:800px;
+    min-height: 50px;
+    margin-top: 40px;
+}

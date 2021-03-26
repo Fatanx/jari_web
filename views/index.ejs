@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>杰瑞武汉分公司</title>
+    <link rel='stylesheet' href='/stylesheets/index.css' />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.1/echarts.min.js"></script>
+    
+  </head>
+  <body >
+    <div class="nav"></div>
+    <div class="container" id="container">
+      <div class="bigbox">
+        <personalcard v-for="person in people" v-bind:person="person"></personalcard>
+      </div>
+    </div>
+  </body>
+  <script src='./javascripts/index.js'></script>
+  <script src='./javascripts/vindex.js'></script>
+</html>
