@@ -1,6 +1,6 @@
 window.onload= function(){
     setEcharts();
-    setBest();
+    //setBest();
 }
 
 function setBest(){

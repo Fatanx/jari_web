@@ -69,22 +69,62 @@ body{
     width:800px;
     height:160px;
     margin-top: 40px;
+    text-align: left;
+}
+
+.project_box .tag{
+    width : auto;
+    padding: 1px 15px;
+    height: 24px;
+    line-height: 14px;
+    font-size: 12px;
+    border: 0 solid black;
+    border-radius: 6px;
+    background-color: #f36;
+    color: white;
+    margin: 2px 5px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.dis{
+    margin: 4px 0 0 12px ;
+}
+
+.project_box .best_one{
+    margin:2px;
 }
 
 .project_box p{
+    margin: 2px 10px;
+}
+
+.project_box  .best{
     display: inline-block;
 }
 
-.project_box p .best{
-    left:  10px;
-}
-
-.project_box p .best_date{
-    right: 10px;
+.project_box  .best_date{
+    display: inline-block;
 }
 
 .history_box{
     width:800px;
     min-height: 50px;
     margin-top: 40px;
+    text-align: left;
+}
+
+.history_box .record_one{
+    margin:2px;
+}
+
+.history_box p{
+    margin: 2px 10px;
+}
+
+.history_box .record{
+    display: inline-block;
+}
+
+.history_box .record_date{
+    display: inline-block;
 }

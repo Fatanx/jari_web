@@ -27,16 +27,25 @@ Vue.component('scorecard',{
     </div>"
 });
 
+Vue.component('tag',{
+    props:["tag"],
+    template:"<span class='tag'>{{tag}}</span>"
+});
+
 Vue.component('projectcard',{
-    props:["person"],
-    template:"<div>\
-        <p></p>\
-        <p></p>\
+    props:["bestone"],
+    template:"<div class = 'best_one'>\
+        <p class = 'best' >{{bestone}}</p> --- \
+        <p class = 'best_date'>'random_time'</p>\
     </div>"
 });
 
 Vue.component('historycard',{
-    template:"<div class='history_box box'></div>"
+    props:["record"],
+    template:"<div class='history_one'>\
+        <p class = 'record' > {{record.record}}</p>\
+        <p class = 'record_date' > {{record.date}}</p>\
+    </div>"
 });
 
 var app = new Vue({

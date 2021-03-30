@@ -16,9 +16,14 @@
         <namecard ref="showimg" v-bind:person="this.person"></namecard>
         <scorecard></scorecard>
         <div class='project_box box'>
-            <projectcard></projectcard>
+            <tag v-for="tag in this.person.tags" v-bind:tag="tag"></tag>
+            <h6 class='dis'>亮点项目</h6>
+            <projectcard v-for="bestone in this.person.best" v-bind:bestone="bestone"></projectcard>
         </div>
-       <historycard></historycard>
+        <div class="history_box box">
+            <h6 class='dis'>历史数据变更</h6>
+            <historycard v-for="record in this.person.records" v-bind:record="record"></historycard>
+        </div>
        <div class="end" id =<%=name%>></div>
    </div>
 </body>
