@@ -9,8 +9,8 @@ Vue.component('personalcard',{
                 <p>{{person.name}}</p>\
             </div>\
             <div class='p_card_introduce'>\
-                <h5>{{person.best[0]}}</h5>\
-                <h5>{{person.best[1]}}</h5>\
+                <h6>{{person.best[0].best}}</h6>\
+                <h6>{{person.best[1].best}}</h6>\
                 <div class='echarts_box'>\</div>\
                 <div class='title_box'>\
                     <p>标书技能</p> <p>方案技能</p> <p>调优技能</p> <p>办公技能</p> <p>软件技能</p> <p>竞品分析</p>\
@@ -41,6 +41,7 @@ var app = new Vue({
             let thiss = this;
             $.post("/getdata/all",function(res){
                 thiss.people = res.people;
+                console.log(res.people);
             })
         }
     },

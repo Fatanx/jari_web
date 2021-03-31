@@ -39,7 +39,7 @@ body{
     width: 120px;
     height: 200px;
     display: inline-block;
-    float: left;
+    background-color: white;
 }
 
 .img_box{

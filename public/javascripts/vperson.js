@@ -35,8 +35,8 @@ Vue.component('tag',{
 Vue.component('projectcard',{
     props:["bestone"],
     template:"<div class = 'best_one'>\
-        <p class = 'best' >{{bestone}}</p> --- \
-        <p class = 'best_date'>'random_time'</p>\
+        <p class = 'best' >{{bestone.best}}</p> --- \
+        <p class = 'best_date'>{{bestone.best_date}}</p>\
     </div>"
 });
 
