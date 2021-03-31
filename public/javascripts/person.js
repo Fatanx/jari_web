@@ -62,10 +62,7 @@ function setEcharts(){
     let id = document.getElementsByClassName('end')[0].id;
     $.post('/getdata/singleScore',{id:id},function(res){
         if(res.msg) {
-            console.log(res.result);
-            console.log(1,option.series);
             option.series = res.result;
-            console.log(2,option.series);
             myChart.setOption(option);
         }
         else ;

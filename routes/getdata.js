@@ -11,7 +11,6 @@ function getInitPeopleData(){
     console.log("成功读取到文件");
     console.log("刷新文件数据.");
     people = j.people;
-    console.log(people);
 }
 
 var people = [{
