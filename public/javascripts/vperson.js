@@ -8,7 +8,6 @@ Vue.component('namecard',{
     </div>",
     methods:{
         setSrc:function(){
-            console.log(this.$props.person);
             this.$el.getElementsByTagName("img")[0].src=this.$props.person.url;
         }
     },
@@ -59,8 +58,6 @@ var app = new Vue({
             $.post('/getdata/single',{id:id},function(res){
                 if(res.msg) {
                     thiss.person=res.data;
-                    console.log(thiss.person);
-                    //thiss.$refs.showimg.setSrc();
                 }
                 else{
                     window.alert(res.data)

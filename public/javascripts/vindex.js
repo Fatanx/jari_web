@@ -19,8 +19,6 @@ Vue.component('personalcard',{
         </div>",
     methods: {
         setSrc:function(){
-            //console.log(this.$el.getElementsByTagName("img")[0]);
-            //console.log(this.$props.person.url);
             this.$el.getElementsByTagName("img")[0].src=this.$props.person.url;
             this.$el.getElementsByClassName("echarts_box")[0].id=this.$props.person.id;
             this.$el.id="ID:" + this.$props.person.id;
@@ -41,7 +39,6 @@ var app = new Vue({
             let thiss = this;
             $.post("/getdata/all",function(res){
                 thiss.people = res.people;
-                console.log(res.people);
             })
         }
     },
