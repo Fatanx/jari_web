@@ -51,7 +51,7 @@ function getAllData(){
           if(err) reject(err);
           else {
             result.forEach((element) => {
-              person.best.push({best:element.name,best_date:element.finish_date});
+              person.best.push({best:element.name,best_date:formatDate(element.finish_date)});
             });
             console.log("读取project成功");
             resolve("ess");
@@ -103,7 +103,7 @@ function getAllData(){
                 case "友商技术方案":{score_span[19] += 1;break;}
                 case "友商调优机制":{score_span[20] += 1;break;}
               }
-              person.records.push({record:element.explain,date:element.refreshDate})
+              person.records.push({record:element.explain,date:formatDate(element.refreshDate)})
             });
             person.score = score_span;
             console.log("读取score成功");
@@ -206,5 +206,12 @@ function getAllData(){
 }
 function init(){
   getAllData();
+}
+
+function formatDate(dateTime){
+  let resultDT ;
+  let dt = new Date(dateTime);
+  resultDT = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+  return resultDT;
 }
 module.exports = {init,people};
