@@ -17,18 +17,27 @@ function getInitPeopleData(){
     //*/
 
     //读取数据库
-    console.log("尝试连接数据库");
-    let getDataFromSql = new Promise(function(resolve,reject){
-        console.log(123321);
+    // console.log("尝试连接数据库");
+    // let getDataFromSql = new Promise(function(resolve,reject){
+    //     console.log(123321);
+    //     let jj = require("./mysql.js");
+    //     console.log(11233123);
+    //     resolve();
+    // })
+    // getDataFromSql.then(data=>{
+    //     console.log(data);
+    //     people = data.people;
+    //     console.log("读取完成",people);
+    // })
+
+    setTimeout(getdata, 10000, 'funky');
+    function getdata(){
         let jj = require("./mysql.js");
-        console.log(11233123);
-        resolve();
-    })
-    getDataFromSql.then(data=>{
-        console.log(data);
-        people = data.people;
+        people = jj.people;
         console.log("读取完成",people);
-    })
+    }
+
+
 }
 
 var people = [{
