@@ -13,15 +13,15 @@ function setChartsLocation(){
             switch(index1){
                 case 0:
                     x='56px';y=0;break;
-                case 1:
+                case 5:
                     x='128px';y='25px';break;
-                case 2:
+                case 4:
                     x='128px';y='135px';break;
                 case 3:
                     x='56px';y='160px';break;
-                case 4:
+                case 2:
                     x='-20px';y='135px';break;
-                case 5:
+                case 1:
                     x='-20px';y='25px';break;
             }
             elem.style.marginLeft=x;

@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const MySQL = require
 
 router.post('/all',function(req,res){
     res.send({people});
@@ -6,11 +7,28 @@ router.post('/all',function(req,res){
 
 
 function getInitPeopleData(){
+    /*
+    //读取本地文件
     console.log("获取数据文件中..");
     let j = require("./data.json")
     console.log("成功读取到文件");
     console.log("刷新文件数据.");
     people = j.people;
+    //*/
+
+    //读取数据库
+    console.log("尝试连接数据库");
+    let getDataFromSql = new Promise(function(resolve,reject){
+        console.log(123321);
+        let jj = require("./mysql.js");
+        console.log(11233123);
+        resolve();
+    })
+    getDataFromSql.then(data=>{
+        console.log(data);
+        people = data.people;
+        console.log("读取完成",people);
+    })
 }
 
 var people = [{
