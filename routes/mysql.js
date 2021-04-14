@@ -9,16 +9,15 @@ var connection = mysql.createConnection({
   });
   connection.connect();
 
-var data = {
-}
-
+var data = {}
 var people = []
+
 
 
 function getAllData(){
   //先查询用户列表
   let sql_em = "select * from person";
-  //尝试 promise 
+  //promise 
   let employ=[];
   const prom1 =new Promise(function(resolve,reject) {
     connection.query(sql_em,(err,result)=>{
@@ -44,6 +43,7 @@ function getAllData(){
       };
       person.name = employ[key].name;
       person.id = employ[key].id;
+      person.url = "./images/" + employ[key].id +".jpg";
       let prom1_1 =new Promise(function(resolve,reject){
         console.log("开始读取project");
         let sql_pro = "select * from project where manager = " + person.id;
@@ -207,5 +207,4 @@ function getAllData(){
 function init(){
   getAllData();
 }
-init();
-module.exports = {data};
+module.exports = {init,people};
