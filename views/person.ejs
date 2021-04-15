@@ -24,8 +24,18 @@
             <h6 class='dis'>历史数据变更</h6>
             <historycard v-for="record in this.person.records" v-bind:record="record"></historycard>
         </div>
-       <div class="end" id =<%=name%>></div>
-   </div>
+        <div class="end" id =<%=name%>></div>
+        <div class = "left" >
+            <controlbox v-if=ismanager v-on:changeadd="changeAdd"></controlbox>
+            <logbutton v-if=!ismanager v-on:changetomanager="changetomanager"></logbutton>
+        </div>
+        <div class="addnew" v-if=isaddtip||isaddproject||isaddchangescore>
+            <addtip v-if=isaddtip v-on:closethis="closeThis" v-on:addtip="addTip"></addtip>
+            <addproject v-if=isaddproject v-on:closethis="closeThis" v-on:addproject="addProject"></addproject>
+            <addchangescore v-if=isaddchangescore v-on:closethis="closeThis"></addchangescore>
+        </div>
+    </div>
+
 </body>
 <script src='../javascripts/person.js'></script>
 <script src='../javascripts/vperson.js'></script>

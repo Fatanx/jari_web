@@ -1,6 +1,7 @@
 //const router = require('express').Router();
 
 var mysql = require('mysql');
+
 var connection = mysql.createConnection({
     host     : '111.231.193.45',
     user     : 'jari',
@@ -204,6 +205,7 @@ function getAllData(){
   })
 //*/
 }
+
 function init(){
   getAllData();
 }
@@ -214,4 +216,17 @@ function formatDate(dateTime){
   resultDT = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
   return resultDT;
 }
-module.exports = {init,people};
+
+function saveData(data){
+  let sql = "INSERT INTO tags (employeeNo,tag) VALUES ("+ data[0] +","+ data[1] +")";
+  const prom1 =new Promise(function(resolve,reject) {
+    connection.query(sql,(err,result)=>{
+      if(err) reject(err);
+      else {
+        console.log(result);
+      };
+      resolve(result);
+    })
+  })
+}
+module.exports = {init,people,saveData};

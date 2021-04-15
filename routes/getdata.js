@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const MySQL = require
+const linkDB = require("./mysql.js");
 
 router.post('/all',function(req,res){
     res.send({people});
@@ -15,12 +15,16 @@ function getInitPeopleData(){
     console.log("刷新文件数据.");
     people = j.people;
     //*/
-    let jj = require("./mysql.js");
-    jj.init();
+
+
+    //*
+    //读取数据库文件
+    linkDB.init();
     setTimeout(function(){
-        people = jj.people;
+        people = linkDB.people;
         console.log("读取完成");
     } , 2000);
+    //*/
 }
 
 var people = [{
@@ -114,6 +118,8 @@ router.post('/getShortScore',function(req,res){
     res.send({msg:true,result:result});
 })
 
+router.post('/savedata',function(req,res){
+})
 
 //router.post('')
 /*
