@@ -52,7 +52,7 @@ function getAllData(){
           if(err) reject(err);
           else {
             result.forEach((element) => {
-              person.best.push({best:element.name,best_date:formatDate(element.finish_date)});
+              person.best.push({best:element.name,best_date:formatDate("date",element.finish_date)});
             });
             console.log("读取project成功");
             resolve("ess");
@@ -61,7 +61,7 @@ function getAllData(){
       }) 
       let prom1_2 = new Promise(function(resolve,reject){
         console.log("开始读取tag");
-        let sql_tag = "select * from tags where employeeNo = " + person.id;
+        let sql_tag = "select * from tags where employeeNo = '" + person.id + "'";
         connection.query(sql_tag,(err,result)=>{
           if(err) reject(err);
           else {
@@ -82,29 +82,29 @@ function getAllData(){
           else {
             result.forEach((element) => {
               switch(element.item){
-                case "投标文件":{score_span[0] += 1;break;}
-                case "技术参数、评分办法":{score_span[1] += 1;break;}
-                case "常见系统解决方案":{score_span[2] += 1;break;}
-                case "交通组织优化方案":{score_span[3] += 1;break;}
-                case "指挥中心建设方案":{score_span[4] += 1;break;}
-                case "综合系统平台建设方案":{score_span[5] += 1;break;}
-                case "基础调优（单个路口优化）":{score_span[6] += 1;break;}
-                case "策略性调优":{score_span[7] += 1;break;}
-                case "城市级信号优化方案":{score_span[8] += 1;break;}
-                case "WORD":{score_span[9] += 1;break;}
-                case "EXCEL":{score_span[10] += 1;break;}
-                case "PPT":{score_span[11] += 1;break;}
-                case "PS":{score_span[12] += 1;break;}
-                case "CAD":{score_span[13] += 1;break;}
-                case "VISSIM":{score_span[14] += 1;break;}
-                case "Synchro":{score_span[15] += 1;break;}
-                case "绿波软件":{score_span[16] += 1;break;}
-                case "广联达":{score_span[17] += 1;break;}
-                case "友商技术参数":{score_span[18] += 1;break;}
-                case "友商技术方案":{score_span[19] += 1;break;}
-                case "友商调优机制":{score_span[20] += 1;break;}
+                case "投标文件":{score_span[0]= score_span[0] +element.itemScore;break;}
+                case "技术参数、评分办法":{score_span[1]= score_span[1] +element.itemScore;break;}
+                case "常见系统解决方案":{score_span[2]= score_span[2] +element.itemScore;break;}
+                case "交通组织优化方案":{score_span[3]= score_span[3] +element.itemScore;break;}
+                case "指挥中心建设方案":{score_span[4]= score_span[4] +element.itemScore;break;}
+                case "综合系统平台建设方案":{score_span[5]= score_span[5] +element.itemScore;break;}
+                case "基础调优（单个路口优化）":{score_span[6]= score_span[6] +element.itemScore;break;}
+                case "策略性调优":{score_span[7]= score_span[7] +element.itemScore;break;}
+                case "城市级信号优化方案":{score_span[8]= score_span[8] +element.itemScore;break;}
+                case "WORD":{score_span[9]= score_span[9] +element.itemScore;break;}
+                case "EXCEL":{score_span[10]= score_span[10] +element.itemScore;break;}
+                case "PPT":{score_span[11]= score_span[11] +element.itemScore;break;}
+                case "PS":{score_span[12]= score_span[12] +element.itemScore;break;}
+                case "CAD":{score_span[13]= score_span[13] +element.itemScore;break;}
+                case "VISSIM":{score_span[14]= score_span[14] +element.itemScore;break;}
+                case "Synchro":{score_span[15]= score_span[15] +element.itemScore;break;}
+                case "绿波软件":{score_span[16]= score_span[16] +element.itemScore;break;}
+                case "广联达":{score_span[17]= score_span[17] +element.itemScore;break;}
+                case "友商技术参数":{score_span[18]= score_span[18] +element.itemScore;break;}
+                case "友商技术方案":{score_span[19]= score_span[19] +element.itemScore;break;}
+                case "友商调优机制":{score_span[20]= score_span[20] +element.itemScore;break;}
               }
-              person.records.push({record:element.explain,date:formatDate(element.refreshDate)})
+              person.records.push({record:element.explain,date:formatDate("datetime",element.refreshDate)})
             });
             person.score = score_span;
             console.log("读取score成功");
@@ -114,14 +114,54 @@ function getAllData(){
       })
       
       Promise.all([prom1_1,prom1_2,prom1_3]).then(function(result){
-        people.push (person);
-        data=people;
+        if(people.length != 0){
+          for(let ele in people){
+            if(people[ele].id == person.id ){
+              console.log(2);
+              people[ele] = person;
+            }
+            else{
+              people.push (person);
+            }
+          }
+        }
+        else{
+          people.push (person);
+        }
       })
     }
   })
+}
 
 
-  //原代码 
+
+function init(){
+  getAllData();
+}
+
+function formatDate(mode = "datetime",dateTime){
+  let resultDT ;
+  let dt = new Date(dateTime);
+  switch(mode){
+    case "date":{
+      resultDT = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate();
+      break;
+    };
+    case "datetime":{
+      resultDT = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+      break;
+    }
+  }
+
+  return resultDT;
+}
+
+function saveData(data){
+}
+
+//报废代码
+function bfdm(){
+    //原代码 
   /*
   connection.query(sql_em,(err,result)=>{
     if(err) console.log(err);
@@ -170,27 +210,27 @@ function getAllData(){
           else {
             result.forEach((element) => {
               switch(element.item){
-                case "投标文件":{score_span[0] += 1;}
-                case "技术参数、评分办法":{score_span[1] += 1;}
-                case "常见系统解决方案":{score_span[2] += 1;}
-                case "交通组织优化方案":{score_span[3] += 1;}
-                case "指挥中心建设方案":{score_span[4] += 1;}
-                case "综合系统平台建设方案":{score_span[5] += 1;}
-                case "基础调优（单个路口优化）":{score_span[6] += 1;}
-                case "策略性调优":{score_span[7] += 1;}
-                case "城市级信号优化方案":{score_span[8] += 1;}
-                case "WORD":{score_span[9] += 1;}
-                case "EXCEL":{score_span[10] += 1;}
-                case "PPT":{score_span[11] += 1;}
-                case "PS":{score_span[12] += 1;}
-                case "CAD":{score_span[13] += 1;}
-                case "VISSIM":{score_span[14] += 1;}
-                case "Synchro":{score_span[15] += 1;}
-                case "绿波软件":{score_span[16] += 1;}
-                case "广联达":{score_span[17] += 1;}
-                case "友商技术参数":{score_span[18] += 1;}
-                case "友商技术方案":{score_span[19] += 1;}
-                case "友商调优机制":{score_span[20] += 1;}
+                case "投标文件":{score_span[0]= score_span[0] +element.itemScore;}
+                case "技术参数、评分办法":{score_span[1]= score_span[0] +element.itemScore;}
+                case "常见系统解决方案":{score_span[2]= score_span[0] +element.itemScore;}
+                case "交通组织优化方案":{score_span[3]= score_span[0] +element.itemScore;}
+                case "指挥中心建设方案":{score_span[4]= score_span[0] +element.itemScore;}
+                case "综合系统平台建设方案":{score_span[5]= score_span[0] +element.itemScore;}
+                case "基础调优（单个路口优化）":{score_span[6]= score_span[0] +element.itemScore;}
+                case "策略性调优":{score_span[7]= score_span[0] +element.itemScore;}
+                case "城市级信号优化方案":{score_span[8]= score_span[0] +element.itemScore;}
+                case "WORD":{score_span[9]= score_span[0] +element.itemScore;}
+                case "EXCEL":{score_span[10]= score_span[0] +element.itemScore;}
+                case "PPT":{score_span[11]= score_span[0] +element.itemScore;}
+                case "PS":{score_span[12]= score_span[0] +element.itemScore;}
+                case "CAD":{score_span[13]= score_span[0] +element.itemScore;}
+                case "VISSIM":{score_span[14]= score_span[0] +element.itemScore;}
+                case "Synchro":{score_span[15]= score_span[0] +element.itemScore;}
+                case "绿波软件":{score_span[16]= score_span[0] +element.itemScore;}
+                case "广联达":{score_span[17]= score_span[0] +element.itemScore;}
+                case "友商技术参数":{score_span[18]= score_span[0] +element.itemScore;}
+                case "友商技术方案":{score_span[19]= score_span[0] +element.itemScore;}
+                case "友商调优机制":{score_span[20]= score_span[0] +element.itemScore;}
               }
               person.records.push({record:element.explain,date:element.refreshDate})
             });
@@ -206,27 +246,4 @@ function getAllData(){
 //*/
 }
 
-function init(){
-  getAllData();
-}
-
-function formatDate(dateTime){
-  let resultDT ;
-  let dt = new Date(dateTime);
-  resultDT = dt.getFullYear() + "-" + (dt.getMonth()+1) + "-" + dt.getDate() + " " + dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-  return resultDT;
-}
-
-function saveData(data){
-  let sql = "INSERT INTO tags (employeeNo,tag) VALUES ("+ data[0] +","+ data[1] +")";
-  const prom1 =new Promise(function(resolve,reject) {
-    connection.query(sql,(err,result)=>{
-      if(err) reject(err);
-      else {
-        console.log(result);
-      };
-      resolve(result);
-    })
-  })
-}
-module.exports = {init,people,saveData};
+module.exports = {init,people,connection};

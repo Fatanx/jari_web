@@ -67,7 +67,10 @@ function setEcharts(){
         }
         else ;
     })
+}
 
+function clickSpan(e){
+    if(e.target.getElementsByClassName("add_radio")[0]){e.target.getElementsByClassName("add_radio")[0].checked = true;}
 }
 
 

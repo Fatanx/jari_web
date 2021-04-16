@@ -67,7 +67,6 @@ body{
 
 .project_box{
     width:800px;
-    height:160px;
     margin-top: 40px;
     text-align: left;
 }
@@ -184,6 +183,12 @@ body{
 
 .addItem .add_title{
     font-size: 12px;
+}
+
+.addItem span:hover{
+    background-color: aquamarine;
+    transition: background-color 0.5;
+    cursor: pointer;
 }
 
 .addItem .add_input,select{

@@ -23,22 +23,18 @@ function getInitPeopleData(){
     setTimeout(function(){
         people = linkDB.people;
         console.log("读取完成");
-    } , 2000);
+    } , 1000);
     //*/
 }
 
 var people = [{
-    url:'',
-    name:'',
+    url:"",
+    name:"",
     best:[],
-    best_date:[],
-    id:'',
+    id:"",
     score:[],
     tags:[],
-    records:[{
-        record:"",
-        date:""
-    }]
+    records:[]
 }]
 
 
@@ -119,12 +115,53 @@ router.post('/getShortScore',function(req,res){
 })
 
 router.post('/savedata',function(req,res){
+    let message = req.body;
+    let mode = message.mode;
+    let id = message.id;
+    let _sql ;
+    switch (mode){
+        case "0":{
+            let data = message.data;
+            _sql="insert into tags (employeeNo,tag) value ('" + id + "'," + data + ")";
+            break;
+        };
+        case "1":{
+            let name = message.name;
+            let date1 = message.time1;
+            let date2 = message.time2;
+            _sql="insert into project (name,start_date,finish_date,manager) value ('" + name + "','" + date1 +  "','" + date2 +  "','" + id + "')";
+            break;
+        };
+        case "2":{
+            //mode:2,id,item,score,date,explain
+            let item = message.item;
+            let itemScore = parseInt(message.score);
+            let refreshDate = message.date;
+            let explain = message.explain;
+            _sql="insert into itemscore (employeeNo,item,itemScore,refreshDate,`explain`) value ('"+ id +"','"+ item +"',"+ itemScore +",'"+ refreshDate +"','"+ explain +"')";
+            break;
+        };
+    };
+    const prom1 =new Promise(function(resolve,reject) {
+        linkDB.connection.query(_sql,(err,result)=>{
+        if(err) reject(err);
+        else {
+            linkDB.init();
+            resolve(result);
+        };
+        })
+    });
+    prom1.then(function(){
+        res.send({msg:true})
+    },function(err){
+        console.log(err);
+        res.send({msg:false,err:err})
+    })
 })
 
 //router.post('')
 /*
 目前来说,个人基本信息走vue   分数等数据走js
-
 */
 getInitPeopleData();
 module.exports = router;

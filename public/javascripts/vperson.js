@@ -140,41 +140,59 @@ Vue.component('addchangescore',{
         <p class='add_title'>添加分数变更</p>\
         <hr>\
         <input class='add_input' placeholder='请输入分数变更原因'></input>\
-        <select>\
-            <option value='0'>投标文件</option>\
-            <option value='1'>技术参数、评分办法</option>\
-            <option value='2'>常见系统解决方案</option>\
-            <option value='3'>交通组织优化方案</option>\
-            <option value='4'>交通组织优化方案</option>\
-            <option value='5'>指挥中心建设方案</option>\
-            <option value='6'>综合系统平台建设方案</option>\
-            <option value='7'>策略性调优</option>\
-            <option value='8'>城市级信号优化方案</option>\
-            <option value='9'>WORD</option>\
-            <option value='10'>EXCEL</option>\
-            <option value='11'>PPT</option>\
-            <option value='12'>PS</option>\
-            <option value='13'>CAD</option>\
-            <option value='14'>VISSIM</option>\
-            <option value='15'>Synchro</option>\
-            <option value='16'>绿波软件</option>\
-            <option value='17'>广联达</option>\
-            <option value='18'>友商技术参数</option>\
-            <option value='19'>友商技术方案</option>\
+        <select class='add_select'>\
+            <option value='投标文件'>投标文件</option>\
+            <option value='技术参数、评分办法'>技术参数、评分办法</option>\
+            <option value='常见系统解决方案'>常见系统解决方案</option>\
+            <option value='交通组织优化方案'>交通组织优化方案</option>\
+            <option value='交通组织优化方案'>交通组织优化方案</option>\
+            <option value='指挥中心建设方案'>指挥中心建设方案</option>\
+            <option value='综合系统平台建设方案'>综合系统平台建设方案</option>\
+            <option value='策略性调优'>策略性调优</option>\
+            <option value='城市级信号优化方案'>城市级信号优化方案</option>\
+            <option value='WORD'>WORD</option>\
+            <option value='EXCEL'>EXCEL</option>\
+            <option value='PPT'>PPT</option>\
+            <option value='PS'>PS</option>\
+            <option value='CAD'>CAD</option>\
+            <option value='VISSIM'>VISSIM</option>\
+            <option value='Synchro'>Synchro</option>\
+            <option value='绿波软件'>绿波软件</option>\
+            <option value='广联达'>广联达</option>\
+            <option value='友商技术参数'>友商技术参数</option>\
+            <option value='友商技术方案'>友商技术方案</option>\
         </select></br>\
         <form>\
-            <input class = 'add_radio' type='radio' name='jj' value='b'>-2\
-            <input class = 'add_radio' type='radio' name='jj' value='a'>-1\
-            <input class = 'add_radio' type='radio' name='jj' value='0'>0\
-            <input class = 'add_radio' type='radio' name='jj' value='1'>+1\
-            <input class = 'add_radio' type='radio' name='jj' value='2'>+2\
+            <span onClick='clickSpan(event)'><input class = 'add_radio' type='radio' name='jj' value='-2'>-2</span>\
+            <span onClick='clickSpan(event)'><input class = 'add_radio' type='radio' name='jj' value='-1'>-1</span>\
+            <span onClick='clickSpan(event)'><input class = 'add_radio' type='radio' name='jj' value='0' checked=true>0</span>\
+            <span onClick='clickSpan(event)'><input class = 'add_radio' type='radio' name='jj' value='1'>+1</span>\
+            <span onClick='clickSpan(event)'><input class = 'add_radio' type='radio' name='jj' value='2'>+2</span>\
         </form>\
-        <button class='add_confirm'>确定</button>\
+        <button class='add_confirm' @click=addscore($event)>确定</button>\
         <button class='add_cancle' @click=closethis($event)>取消</button>\
     </div>",
     methods:{
         closethis:function(e){
             this.$emit("closethis","3")
+        },
+        addscore:function(e){
+            let id = document.getElementsByClassName("end")[0].id;
+            let input1 = e.target.parentNode.getElementsByClassName("add_input")[0].value;
+            let select1 =  e.target.parentNode.getElementsByClassName("add_select")[0].value;
+            let time1 = new Date();
+            console.log(time1);
+            let radio1 = (function(){
+                let dom_radios = e.target.parentNode.getElementsByClassName("add_radio");
+                for(let _node in dom_radios){
+                    if(dom_radios[_node].checked == true){
+                        return parseInt(dom_radios[_node].value);
+                    }
+                }
+                return 0;
+            })()
+            let result = [id,input1,select1,radio1,time1]
+            this.$emit("addscore",result);
         }
     }
 })
@@ -182,7 +200,7 @@ Vue.component('addchangescore',{
 var app = new Vue({
     el:"#container",
     data:{
-        person:[],
+        person:{},
         ismanager:false,
         isaddtip:false,
         isaddproject:false,
@@ -220,13 +238,27 @@ var app = new Vue({
         addTip:function(data){
             this.person.tags.push(data[1]);
             this.closeThis("1");
+            $.post("/getdata/savedata",{mode:0,id:data[0],data:data[1]},(res)=>{
+                //console.log(res);
+            });
         },
         addProject:function(data){
-            console.log(data);
-
+            this.person.best.push({best:data[1],best_date:data[2]});
+            this.closeThis("2")
+            $.post("/getdata/savedata",{mode:1,id:data[0],name:data[1],time1:data[2],time2:data[3]},(res)=>{
+                //console.log(res);
+            });
         },
-        addScore:function(){
-
+        addScore:function(data){
+            console.log(data);
+            this.person.records.push({record:data[1],date:data[4].getFullYear() + "-" + (data[4].getMonth()+1) + "-" + data[4].getDate() + " " + data[4].getHours() + ":" + data[4].getMinutes() + ":" + data[4].getSeconds()});
+            this.closeThis("3");
+            $.post("/getdata/savedata",{mode:2,id:data[0],item:data[2],score:data[3],date:data[4].getFullYear() + "-" + (data[4].getMonth()+1) + "-" + data[4].getDate() + " " + data[4].getHours() + ":" + data[4].getMinutes() + ":" + data[4].getSeconds(),explain:data[1]},(res)=>{//id,input1,select1,radio1,time1
+                //console.log(res);
+                setTimeout(function(){
+                    setEcharts();
+                } , 1000);
+            });
         }
     },
     mounted:function(){
