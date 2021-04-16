@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
   });
   connection.connect();
 
-var data = {}
+var personlist = []
 var people = []
 
 
@@ -114,19 +114,16 @@ function getAllData(){
       })
       
       Promise.all([prom1_1,prom1_2,prom1_3]).then(function(result){
-        if(people.length != 0){
-          for(let ele in people){
-            if(people[ele].id == person.id ){
-              console.log(2);
-              people[ele] = person;
-            }
-            else{
-              people.push (person);
+        if(personlist.includes(person.id)){
+          for(let index in people){
+            if(people[index].id == person.id){
+              people[index] = person;
             }
           }
         }
         else{
           people.push (person);
+          personlist.push(person.id);
         }
       })
     }
